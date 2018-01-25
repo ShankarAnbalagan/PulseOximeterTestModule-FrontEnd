@@ -1,0 +1,29 @@
+c:\users\shankar\source\repos\Pulse_OM\Pulse_OM\bin\Debug\Pulse_OM.exe.config
+c:\users\shankar\source\repos\Pulse_OM\Pulse_OM\bin\Debug\Pulse_OM.exe
+c:\users\shankar\source\repos\Pulse_OM\Pulse_OM\bin\Debug\Pulse_OM.pdb
+c:\users\shankar\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.csprojResolveAssemblyReference.cache
+c:\users\shankar\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.pulse_om.resources
+c:\users\shankar\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.Properties.Resources.resources
+c:\users\shankar\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.csproj.GenerateResource.Cache
+c:\users\shankar\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.csproj.CoreCompileInputs.cache
+c:\users\shankar\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.exe
+c:\users\shankar\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.pdb
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\Pulse_OM.exe.config
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\Pulse_OM.exe
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\Pulse_OM.pdb
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.csprojResolveAssemblyReference.cache
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.pulse_om.resources
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.Properties.Resources.resources
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.csproj.GenerateResource.Cache
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.csproj.CoreCompileInputs.cache
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.exe
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\obj\Debug\Pulse_OM.pdb
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\LiveCharts.dll
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\LiveCharts.WinForms.dll
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\LiveCharts.Wpf.dll
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\LiveCharts.pdb
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\LiveCharts.xml
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\LiveCharts.WinForms.pdb
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\LiveCharts.WinForms.xml
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\LiveCharts.Wpf.pdb
+D:\Visual Studio programs\source\repos\Pulse_OM\Pulse_OM\bin\Debug\LiveCharts.Wpf.xml
