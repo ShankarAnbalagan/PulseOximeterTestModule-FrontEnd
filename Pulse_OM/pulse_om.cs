@@ -123,8 +123,8 @@ namespace Pulse_OM
             while(recvData!=null)
             {
                 //change here
-                // int y = (int)(Math.Sin((double)x / 50) * BM.Height / 2 + BM.Height / 2);
-                int y = 0;
+                int y = (int)(Math.Sin((double)x / 50) * BM.Height / 2 + BM.Height / 2);
+                //int y = 0;
                 x++;
                 if (x == 10000) x = 0;
                 BM.SetPixel(0, y, Color.Black);
