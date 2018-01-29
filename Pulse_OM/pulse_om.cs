@@ -15,14 +15,14 @@ namespace Pulse_OM
     public partial class pulse_om : Form
     {
         private String indata = "";
-        private String[] recvData=new String[2];
-        private String sendData="";
+        private String[] recvData = { "-", "-" };
+        private String sendData = "";
         private float spo2;
         private float bpm;
         private float pi;
-        private float[,] freqency=new float[2,3];
+        private float[,] freqency = new float[2, 3];
 
-        frequencyCalc fc=new frequencyCalc();
+        frequencyCalc fc = new frequencyCalc();
 
         public pulse_om()
         {
@@ -31,9 +31,9 @@ namespace Pulse_OM
 
         private void pulse_om_Load(object sender, EventArgs e)
         {
-            spo2_req.Value=98;
-            bpm_req.Value=72;
-            pi_req.Value=10;
+            spo2_req.Value = 98;
+            bpm_req.Value = 72;
+            pi_req.Value = 10;
             label6.Text = "Status";
             spo2_test.Text = "-";
             bpm_test.Text = "-";
@@ -41,7 +41,7 @@ namespace Pulse_OM
             {
                 serialPort1.Open();
             }
-            catch (Exception  )
+            catch (Exception)
             {
                 MessageBox.Show("COM is not available");
             }
@@ -54,28 +54,41 @@ namespace Pulse_OM
             //MessageBox.Show(recvData[0]+" "+recvData[1]);
         }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            spo2_test.Text = recvData[0];
+            bpm_test.Text = recvData[1];
+        }
+
         private void findData()
         {
-            int p=0;
+            int p = 0;
             String[] individual_data = new String[13];
             individual_data = indata.Split(',');
             while (p < 14)
             {
-                if (individual_data[p].Equals("135"))
+                try
                 {
-                    recvData[0] = individual_data[p + 3];
-                    recvData[1] = individual_data[p + 4];
-                    break;
+                    if (individual_data[p].Equals("135"))
+                    {
+                        recvData[0] = individual_data[p + 3];
+                        recvData[1] = individual_data[p + 4];
+                        break;
+                    }
+                }
+                catch (Exception)
+                {
+                    return;
                 }
                 p++;
             }
         }
-        
+
 
         private void button1_Click(object sender, EventArgs e)
         {
             label6.Text = "Finger detected";
-            spo2= (float)spo2_req.Value;
+            spo2 = (float)spo2_req.Value;
             bpm = (float)bpm_req.Value;
             pi = (float)pi_req.Value;
             freqency = fc.frequencyOfWaves(spo2, bpm, pi);
@@ -94,24 +107,23 @@ namespace Pulse_OM
             }
 
             Thread.Sleep(500);
-            if (recvData!=null)
+            if (recvData != null)
             {
-                spo2_test.Text = recvData[0];
-                bpm_test.Text = recvData[1];
+                timer1.Start();
                 //plotGraph();
             }
             else
             {
                 label6.Text = "No incomming data";
             }
-            
+
         }
 
         private void convToString(float[,] f)
         {
             String s;
-            for(int i=0;i<2;i++)
-                for(int j = 0; j < 3; j++)
+            for (int i = 0; i < 2; i++)
+                for (int j = 0; j < 3; j++)
                 {
                     s = (Math.Floor(f[i, j])).ToString();
                     sendData = sendData + s + ",";
@@ -121,11 +133,12 @@ namespace Pulse_OM
 
         private void button2_Click(object sender, EventArgs e)
         {
+            timer1.Stop();
             label6.Text = "No Finger detected";
             serialPort1.WriteLine("B");
             spo2_test.Text = "-";
             bpm_test.Text = "-";
-         
+
         }
 
         ~pulse_om()
@@ -140,7 +153,7 @@ namespace Pulse_OM
                            pictureBox1.ClientSize.Width,
                            pictureBox1.ClientSize.Height);
             pictureBox1.Image = BM;
-            while(recvData!=null)
+            while (recvData != null)
             {
                 //change here
                 int y = (int)(Math.Sin((double)x / 50) * BM.Height / 2 + BM.Height / 2);
@@ -162,7 +175,7 @@ namespace Pulse_OM
             {
                 serialPort1.Open();
             }
-            catch (Exception  )
+            catch (Exception)
             {
                 MessageBox.Show("COM is not available");
             }
@@ -176,7 +189,7 @@ namespace Pulse_OM
             {
                 serialPort1.Open();
             }
-            catch (Exception  )
+            catch (Exception)
             {
                 MessageBox.Show("COM is not available");
             }
@@ -190,7 +203,7 @@ namespace Pulse_OM
             {
                 serialPort1.Open();
             }
-            catch (Exception  )
+            catch (Exception)
             {
                 MessageBox.Show("COM is not available");
             }
@@ -204,7 +217,7 @@ namespace Pulse_OM
             {
                 serialPort1.Open();
             }
-            catch (Exception  )
+            catch (Exception)
             {
                 MessageBox.Show("COM is not available");
             }
@@ -218,7 +231,7 @@ namespace Pulse_OM
             {
                 serialPort1.Open();
             }
-            catch (Exception  )
+            catch (Exception)
             {
                 MessageBox.Show("COM is not available");
             }
@@ -232,7 +245,7 @@ namespace Pulse_OM
             {
                 serialPort1.Open();
             }
-            catch (Exception  )
+            catch (Exception)
             {
                 MessageBox.Show("COM is not available");
             }
@@ -246,7 +259,7 @@ namespace Pulse_OM
             {
                 serialPort1.Open();
             }
-            catch (Exception  )
+            catch (Exception)
             {
                 MessageBox.Show("COM is not available");
             }
@@ -260,13 +273,12 @@ namespace Pulse_OM
             {
                 serialPort1.Open();
             }
-            catch (Exception  )
+            catch (Exception)
             {
                 MessageBox.Show("COM is not available");
             }
         }
     }
-
 
 
     public static class MyExtensions
