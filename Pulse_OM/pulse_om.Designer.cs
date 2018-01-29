@@ -140,6 +140,7 @@
             // serialPort1
             // 
             this.serialPort1.BaudRate = 4800;
+            this.serialPort1.PortName = "COM7";
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
             // 
             // label6

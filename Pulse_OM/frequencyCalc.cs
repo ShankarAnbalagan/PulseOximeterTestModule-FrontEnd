@@ -21,6 +21,8 @@ namespace Pulse_OM
 
         public float[,] frequencyOfWaves(float s, float b, float p)
         {
+            float ir_fdiff,red_fdiff;
+
             spo2 = s;
             bpm = b;
             pi_ir = p;
@@ -32,7 +34,11 @@ namespace Pulse_OM
             red_fmax = (float)(((pi_red / 100) * red_fmin * Math.Sqrt(2) * 2.0) + red_fmin);
             ir_fmax = (float)(((pi_ir / 100) * ir_fmin * Math.Sqrt(2) * 2.0) + ir_fmin);
 
-            freqency= new float[2,2] { {ir_fmax, ir_fmin} , { red_fmax, red_fmin} };
+            ir_fdiff= (ir_fmax / 1000) - (ir_fmin / 1000);
+            red_fdiff = (red_fmax / 1000) - (red_fmin / 1000);
+
+            freqency = new float[2,3] { {ir_fmax, ir_fmin, ir_fdiff} ,
+                { red_fmax, red_fmin, red_fdiff } };
 
             return freqency;
         }

@@ -20,7 +20,7 @@ namespace Pulse_OM
         private float spo2;
         private float bpm;
         private float pi;
-        private float[,] freqency=new float[2,2];
+        private float[,] freqency=new float[2,3];
 
         frequencyCalc fc=new frequencyCalc();
 
@@ -50,36 +50,55 @@ namespace Pulse_OM
         private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             indata = serialPort1.ReadLine();
-            recvData = indata.Split(',');
+            findData();
             //MessageBox.Show(recvData[0]+" "+recvData[1]);
+        }
+
+        private void findData()
+        {
+            int p=0;
+            String[] individual_data = new String[13];
+            individual_data = indata.Split(',');
+            while (p < 14)
+            {
+                if (individual_data[p].Equals("135"))
+                {
+                    recvData[0] = individual_data[p + 3];
+                    recvData[1] = individual_data[p + 4];
+                    break;
+                }
+                p++;
+            }
         }
         
 
         private void button1_Click(object sender, EventArgs e)
         {
             label6.Text = "Finger detected";
-                        spo2= (short)spo2_req.Value;
-            bpm = (short)bpm_req.Value;
-            pi = (short)pi_req.Value;
+            spo2= (float)spo2_req.Value;
+            bpm = (float)bpm_req.Value;
+            pi = (float)pi_req.Value;
             freqency = fc.frequencyOfWaves(spo2, bpm, pi);
             convToString(freqency);
 
             try
             {
                 serialPort1.WriteLine(sendData);
+                sendData = "";
             }
             catch (Exception)
             {
                 MessageBox.Show("COM not available");
+                sendData = "";
                 return;
             }
 
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             if (recvData!=null)
             {
                 spo2_test.Text = recvData[0];
                 bpm_test.Text = recvData[1];
-                plotGraph();
+                //plotGraph();
             }
             else
             {
@@ -92,11 +111,12 @@ namespace Pulse_OM
         {
             String s;
             for(int i=0;i<2;i++)
-                for(int j = 0; j < 2; j++)
+                for(int j = 0; j < 3; j++)
                 {
-                    s = Math.Floor(f[i, j]).ToString();
+                    s = (Math.Floor(f[i, j])).ToString();
                     sendData = sendData + s + ",";
                 }
+            sendData = sendData + "\0";
         }
 
         private void button2_Click(object sender, EventArgs e)
