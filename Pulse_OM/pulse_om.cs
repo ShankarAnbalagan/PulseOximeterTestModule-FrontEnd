@@ -21,7 +21,6 @@ namespace Pulse_OM
         private String sendData = "";
         int[] plDataArray = new int[200];
         int count=0;
-        int graphValue = 0;
         private float spo2;
         private float bpm;
         private float pi;
@@ -66,8 +65,50 @@ namespace Pulse_OM
         {
             spo2_test.Text = recvData[0];
             bpm_test.Text = recvData[1];
+            okColorStatus();
             plDataArray[count] = Convert.ToInt32(recvData[2]);
             count = (count + 1) % 200;
+        }
+
+        private void okColorStatus()
+        {
+            if (Convert.ToInt32(recvData[0]) == spo2)
+            {
+                spo2_test.BackColor = Color.Green;
+                if (Convert.ToInt32(recvData[1]) == bpm)
+                {
+                    bpm_test.BackColor = Color.Green;
+                    if (Convert.ToInt32(recvData[0]) == spo2 && Convert.ToInt32(recvData[1]) == bpm)
+                    {
+                        spo2_test.BackColor = Color.Green;
+                        bpm_test.BackColor = Color.Green;
+                        OK.Text = " PASS ";
+                        OK.BackColor = Color.Green;
+                    }
+                }
+            }
+            else if (Convert.ToInt32(recvData[1]) == bpm)
+            {
+                bpm_test.BackColor = Color.Green;
+                if (Convert.ToInt32(recvData[0]) == spo2)
+                {
+                    spo2_test.BackColor = Color.Green;
+                    if (Convert.ToInt32(recvData[0]) == spo2 && Convert.ToInt32(recvData[1]) == bpm)
+                    {
+                        spo2_test.BackColor = Color.Green;
+                        bpm_test.BackColor = Color.Green;
+                        OK.Text = " PASS ";
+                        OK.BackColor = Color.Green;
+                    }
+                }
+            }
+            else
+            {
+                spo2_test.BackColor = Color.Red;
+                bpm_test.BackColor = Color.Red;
+                OK.Text = " FAIL ";
+                OK.BackColor = Color.Red;
+            }
         }
 
         private void findData()
@@ -99,18 +140,11 @@ namespace Pulse_OM
         {
             while (true)
             {
-
-
                 if (PLGraph.IsHandleCreated)
                 {
                     this.Invoke((MethodInvoker)delegate { UpdatePLGraph(); });
                 }
-                else
-                {
-                    //......
-                }
-
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
             }
         }
 
@@ -120,9 +154,9 @@ namespace Pulse_OM
 
             for (int i = 0; i < plDataArray.Length - 1; ++i)
             {
-                if(plDataArray[i]<0)
+                if(plDataArray[i]<=0)
                     PLGraph.Series["Series1"].Points.AddY(0);
-                if(plDataArray[i]<127)
+                if(plDataArray[i]>127)
                     PLGraph.Series["Series1"].Points.AddY(127);
                 else
                     PLGraph.Series["Series1"].Points.AddY(plDataArray[i]);
@@ -135,6 +169,7 @@ namespace Pulse_OM
             graphThread.IsBackground = true;
 
             label6.Text = "Finger detected";
+            OK.Text = "TESTING";
             spo2 = (float)spo2_req.Value;
             bpm = (float)bpm_req.Value;
             pi = (float)pi_req.Value;
@@ -183,7 +218,11 @@ namespace Pulse_OM
             timer1.Stop();
             graphThread.Abort();
             PLGraph.Series["Series1"].Points.Clear();
+            spo2_test.BackColor = Color.White;
+            bpm_test.BackColor = Color.White;
             label6.Text = "No Finger detected";
+            OK.Text = " NO BOARD ";
+            OK.BackColor = Color.Yellow;
             serialPort1.WriteLine("B");
             spo2_test.Text = "-";
             bpm_test.Text = "-";
@@ -193,6 +232,8 @@ namespace Pulse_OM
         ~pulse_om()
         {
             serialPort1.Close();
+            timer1.Stop();
+            graphThread.Abort();
         }
 
 
@@ -306,6 +347,11 @@ namespace Pulse_OM
             {
                 MessageBox.Show("COM is not available");
             }
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
