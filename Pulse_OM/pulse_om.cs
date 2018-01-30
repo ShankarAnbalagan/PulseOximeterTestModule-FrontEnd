@@ -14,9 +14,14 @@ namespace Pulse_OM
 {
     public partial class pulse_om : Form
     {
+        private Thread graphThread;
+
         private String indata = "";
-        private String[] recvData = { "-", "-" };
+        private String[] recvData = { "-", "-", "0" };
         private String sendData = "";
+        int[] plDataArray = new int[200];
+        int count=0;
+        int graphValue = 0;
         private float spo2;
         private float bpm;
         private float pi;
@@ -37,6 +42,9 @@ namespace Pulse_OM
             label6.Text = "Status";
             spo2_test.Text = "-";
             bpm_test.Text = "-";
+
+            PLGraph.Series["Series1"].Points.Clear();
+
             try
             {
                 serialPort1.Open();
@@ -58,6 +66,8 @@ namespace Pulse_OM
         {
             spo2_test.Text = recvData[0];
             bpm_test.Text = recvData[1];
+            plDataArray[count] = Convert.ToInt32(recvData[2]);
+            count = (count + 1) % 200;
         }
 
         private void findData()
@@ -71,8 +81,9 @@ namespace Pulse_OM
                 {
                     if (individual_data[p].Equals("135"))
                     {
-                        recvData[0] = individual_data[p + 3];
-                        recvData[1] = individual_data[p + 4];
+                        recvData[0] = individual_data[p + 4];
+                        recvData[1] = individual_data[p + 3];
+                        recvData[2] = individual_data[p + 1];
                         break;
                     }
                 }
@@ -84,9 +95,43 @@ namespace Pulse_OM
             }
         }
 
+        private void plotGraph()
+        {
+            while (true)
+            {
+
+
+                if (PLGraph.IsHandleCreated)
+                {
+                    this.Invoke((MethodInvoker)delegate { UpdatePLGraph(); });
+                }
+                else
+                {
+                    //......
+                }
+
+                Thread.Sleep(1000);
+            }
+        }
+
+        private void UpdatePLGraph()
+        {
+            PLGraph.Series["Series1"].Points.Clear();
+
+            for (int i = 0; i < plDataArray.Length - 1; ++i)
+            {
+                if(plDataArray[i]>127)
+                    PLGraph.Series["Series1"].Points.AddY(127);
+                else if (plDataArray[i]>0)
+                    PLGraph.Series["Series1"].Points.AddY(plDataArray[i]);
+            }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            graphThread = new Thread(new ThreadStart(this.plotGraph));
+            graphThread.IsBackground = true;
+
             label6.Text = "Finger detected";
             spo2 = (float)spo2_req.Value;
             bpm = (float)bpm_req.Value;
@@ -96,7 +141,7 @@ namespace Pulse_OM
 
             try
             {
-                serialPort1.WriteLine(sendData);
+                //serialPort1.WriteLine(sendData);
                 sendData = "";
             }
             catch (Exception)
@@ -110,7 +155,7 @@ namespace Pulse_OM
             if (recvData != null)
             {
                 timer1.Start();
-                //plotGraph();
+                graphThread.Start();
             }
             else
             {
@@ -134,6 +179,8 @@ namespace Pulse_OM
         private void button2_Click(object sender, EventArgs e)
         {
             timer1.Stop();
+            graphThread.Abort();
+            PLGraph.Series["Series1"].Points.Clear();
             label6.Text = "No Finger detected";
             serialPort1.WriteLine("B");
             spo2_test.Text = "-";
@@ -146,26 +193,6 @@ namespace Pulse_OM
             serialPort1.Close();
         }
 
-        private void plotGraph()
-        {
-            int x = 0;
-            Bitmap BM = new Bitmap(
-                           pictureBox1.ClientSize.Width,
-                           pictureBox1.ClientSize.Height);
-            pictureBox1.Image = BM;
-            while (recvData != null)
-            {
-                //change here
-                int y = (int)(Math.Sin((double)x / 50) * BM.Height / 2 + BM.Height / 2);
-                //int y = 0;
-                x++;
-                if (x == 10000) x = 0;
-                BM.SetPixel(0, y, Color.Black);
-                BM = BM.Scroll(1, 0);
-                pictureBox1.Image = BM;
-                Application.DoEvents();
-            }
-        }
 
         private void cOM1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -278,53 +305,5 @@ namespace Pulse_OM
                 MessageBox.Show("COM is not available");
             }
         }
-    }
-
-
-    public static class MyExtensions
-    {
-        [DllImport("user32.dll")]
-        private static extern int ScrollWindowEx(
-          System.IntPtr hWnd,
-          int dx,
-          int dy,
-        [MarshalAs(UnmanagedType.LPStruct)]
-   RECT prcScroll,
-        [MarshalAs(UnmanagedType.LPStruct)]
-   RECT prcClip,
-          System.IntPtr hrgnUpdate,
-        [MarshalAs(UnmanagedType.LPStruct)]
-   RECT prcUpdate,
-          System.UInt32 flags);
-
-        public static Bitmap Scroll(this Bitmap BM,
-                                      int dx, int dy)
-        {
-            Bitmap BMTemp = new Bitmap(BM.Width,
-                                            BM.Height);
-            Graphics G = Graphics.FromImage(BMTemp);
-            G.DrawImage(BM, dx, dy);
-            G.Dispose();
-            return BMTemp;
-        }
-
-        public static void Scroll(this PictureBox BP,
-                                         int dx, int dy)
-        {
-            ScrollWindowEx(BP.Handle,
-                           dx, dy,
-                           null, null,
-                           IntPtr.Zero,
-                           null, 2);
-        }
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public class RECT
-    {
-        public Int32 left;
-        public Int32 top;
-        public Int32 right;
-        public Int32 bottom;
     }
 }

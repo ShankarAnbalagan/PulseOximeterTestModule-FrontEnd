@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label1 = new System.Windows.Forms.Label();
             this.spo2_test = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -56,16 +59,18 @@
             this.label7 = new System.Windows.Forms.Label();
             this.pi_req = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.PLGraphText = new System.Windows.Forms.Label();
+            this.PLGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spo2_req)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bpm_req)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pi_req)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PLGraph)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -141,7 +146,7 @@
             // serialPort1
             // 
             this.serialPort1.BaudRate = 4800;
-            this.serialPort1.PortName = "COM7";
+            this.serialPort1.PortName = "COM5";
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
             // 
             // label6
@@ -324,16 +329,9 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Required Values";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(425, 95);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(730, 564);
-            this.pictureBox1.TabIndex = 15;
-            this.pictureBox1.TabStop = false;
-            // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.PLGraph);
             this.groupBox3.Location = new System.Drawing.Point(411, 72);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(759, 605);
@@ -345,12 +343,38 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // PLGraphText
+            // 
+            this.PLGraphText.AutoSize = true;
+            this.PLGraphText.Location = new System.Drawing.Point(64, 591);
+            this.PLGraphText.Name = "PLGraphText";
+            this.PLGraphText.Size = new System.Drawing.Size(46, 17);
+            this.PLGraphText.TabIndex = 17;
+            this.PLGraphText.Text = "label8";
+            // 
+            // PLGraph
+            // 
+            chartArea3.Name = "ChartArea1";
+            this.PLGraph.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.PLGraph.Legends.Add(legend3);
+            this.PLGraph.Location = new System.Drawing.Point(17, 21);
+            this.PLGraph.Name = "PLGraph";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.PLGraph.Series.Add(series3);
+            this.PLGraph.Size = new System.Drawing.Size(723, 562);
+            this.PLGraph.TabIndex = 0;
+            this.PLGraph.Text = "chart1";
+            // 
             // pulse_om
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1182, 689);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.PLGraphText);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -372,7 +396,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pi_req)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PLGraph)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -407,9 +432,10 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown pi_req;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label PLGraphText;
+        private System.Windows.Forms.DataVisualization.Charting.Chart PLGraph;
     }
 }
 
