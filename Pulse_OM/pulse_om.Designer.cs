@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label1 = new System.Windows.Forms.Label();
             this.spo2_test = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -337,7 +337,7 @@
             this.groupBox3.Size = new System.Drawing.Size(759, 605);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Pythsmograph";
+            this.groupBox3.Text = "Plythsmograph";
             // 
             // timer1
             // 
@@ -354,17 +354,18 @@
             // 
             // PLGraph
             // 
-            chartArea3.Name = "ChartArea1";
-            this.PLGraph.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.PLGraph.Legends.Add(legend3);
+            chartArea1.AxisX.IsStartedFromZero = false;
+            chartArea1.Name = "ChartArea1";
+            this.PLGraph.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.PLGraph.Legends.Add(legend1);
             this.PLGraph.Location = new System.Drawing.Point(17, 21);
             this.PLGraph.Name = "PLGraph";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.PLGraph.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.PLGraph.Series.Add(series1);
             this.PLGraph.Size = new System.Drawing.Size(723, 562);
             this.PLGraph.TabIndex = 0;
             this.PLGraph.Text = "chart1";

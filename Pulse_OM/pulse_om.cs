@@ -120,9 +120,11 @@ namespace Pulse_OM
 
             for (int i = 0; i < plDataArray.Length - 1; ++i)
             {
-                if(plDataArray[i]>127)
+                if(plDataArray[i]<0)
+                    PLGraph.Series["Series1"].Points.AddY(0);
+                if(plDataArray[i]<127)
                     PLGraph.Series["Series1"].Points.AddY(127);
-                else if (plDataArray[i]>0)
+                else
                     PLGraph.Series["Series1"].Points.AddY(plDataArray[i]);
             }
         }
